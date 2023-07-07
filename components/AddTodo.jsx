@@ -18,6 +18,17 @@ function AddTodo() {
     const id = `${Math.random()}`;
 
     let oneTodo = { id, todo };
+
+    fetch("/api/new-todo", {
+      method: "POST",
+      body: JSON.stringify(oneTodo),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((response) => {
+      const data = response.json();
+    });
+
     const todoData = [...todos, oneTodo];
     dispatch(todoActions.updateTodos(todoData));
   };

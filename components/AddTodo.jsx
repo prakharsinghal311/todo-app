@@ -17,7 +17,7 @@ function AddTodo() {
 
     const id = `${Math.random()}`;
 
-    let oneTodo = { id, todo };
+    let oneTodo = { id, todo, status: "incompleted" };
 
     fetch("/api/new-todo", {
       method: "POST",

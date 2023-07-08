@@ -1,5 +1,5 @@
 import { MongoClient } from "mongodb";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Link from "next/link";
 import AddTodo from "../../components/AddTodo";
@@ -12,12 +12,18 @@ export default function Home(props) {
 
   const data = Object.values(props);
 
-  dispatch(todoActions.updateTodos(data[0]));
+  const newData = data[0].filter((i) => i.status === "incompleted");
+
+  dispatch(todoActions.updateTodos(newData));
+
   const todos = useSelector((state) => state.todo.todos);
 
   const [openAddTodo, setOpenAddTodo] = useState(false);
+  // const [flag, setFlag] = useState(false);
 
   const addTodoHandler = () => {
+    //setFlag(true);
+    //useEffect(() => setOpenAddTodo((todo) => !todo), [flag]);
     setOpenAddTodo((todo) => !todo);
   };
 
@@ -59,6 +65,7 @@ export async function getStaticProps() {
         _id: i._id.toString(),
         id: i.id,
         todo: i.todo,
+        status: i.status,
       })),
     },
     revalidate: 1,

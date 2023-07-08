@@ -1,8 +1,8 @@
 import { MongoClient, ObjectId } from "mongodb";
 
 async function handler(req, res) {
-  if (req.method === "PATCH") {
-    const { todoid, status } = req.body;
+  if (req.method === "DELETE") {
+    const { todoId } = req.body;
 
     const client = await MongoClient.connect(
       "mongodb+srv://prakhar:lHzvcG7bbVDYguMg@cluster0.v7bxtre.mongodb.net/todoDatabase?retryWrites=true&w=majority"
@@ -12,14 +12,13 @@ async function handler(req, res) {
 
     const todosCollection = db.collection("todoDatabase");
 
-    const result = await todosCollection.updateOne(
-      { _id: new ObjectId(todoid) },
-      { $set: { status: status } }
-    );
+    const result = await todosCollection.deleteOne({
+      _id: new ObjectId(todoId),
+    });
 
     client.close();
 
-    res.status(201).json({ message: "todos updated!" });
+    res.status(200).json({ message: "todo delete!" });
   }
 }
 

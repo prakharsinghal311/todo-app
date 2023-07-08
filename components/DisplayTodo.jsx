@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 import classes from "./DisplayTodo.module.css";
 import { todoActions } from "../store/todoSlice";
 
@@ -6,11 +7,14 @@ function DisplayTodo(props) {
   const todos = useSelector((state) => state.todo.todos);
   const completedTodos = useSelector((state) => state.todo.completedTodos);
   const dispatch = useDispatch();
+  //const [flag, setFlag] = useState(false);
 
   const todoClickHandler = () => {
+    //setFlag((flag) => !flag);
     const temp = [...todos];
     const temp1 = temp.filter((i) => props.id !== i.id);
     console.log(temp1);
+
     dispatch(todoActions.updateTodos(temp1));
 
     let completedtodo = { id: props.id, todo: props.todo };
@@ -37,6 +41,16 @@ function DisplayTodo(props) {
     const temp1 = temp.filter((i) => props.id !== i.id);
     dispatch(todoActions.updateTodos(temp1));
   };
+
+  fetch("/api/delete-todo", {
+    method: "DELETE",
+    body: JSON.stringify({ todoId: props._id }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then((response) => {
+    const data = response.json();
+  });
   return (
     <>
       <h4>

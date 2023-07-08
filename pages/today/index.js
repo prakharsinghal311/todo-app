@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Link from "next/link";
 import AddTodo from "../../components/AddTodo";
-
 import DisplayTodo from "../../components/DisplayTodo";
 import { todoActions } from "../../store/todoSlice";
 
@@ -13,6 +12,10 @@ export default function Home(props) {
   const data = Object.values(props);
 
   const newData = data[0].filter((i) => i.status === "incompleted");
+
+  const completedData = data[0].filter((i) => i.status === "completed");
+
+  dispatch(todoActions.updateCompletedTodos(completedData));
 
   dispatch(todoActions.updateTodos(newData));
 

@@ -26,7 +26,7 @@ function AddTodo() {
         "Content-Type": "application/json",
       },
     }).then((response) => {
-      const data = response.json();
+      //const data = response.json();
     });
 
     const todoData = [...todos, oneTodo];

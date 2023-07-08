@@ -10,11 +10,26 @@ function DisplayTodo(props) {
   const todoClickHandler = () => {
     const temp = [...todos];
     const temp1 = temp.filter((i) => props.id !== i.id);
+    console.log(temp1);
     dispatch(todoActions.updateTodos(temp1));
 
     let completedtodo = { id: props.id, todo: props.todo };
     const completed = [...completedTodos, completedtodo];
     dispatch(todoActions.updateCompletedTodos(completed));
+
+    // const temp2 = { ...props, status: "completed" };
+    // const temp3 = { ...temp2 };
+    // delete temp3._id;
+
+    fetch("/api/put-todo", {
+      method: "PATCH",
+      body: JSON.stringify({ todoid: props._id, status: "completed" }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((response) => {
+      const data = response.json();
+    });
   };
 
   const deleteHandler = () => {

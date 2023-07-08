@@ -24,7 +24,12 @@ export default function Home(props) {
   return (
     <>
       {todos.map((todo) => (
-        <DisplayTodo key={todo.id} id={todo.id} todo={todo.todo} />
+        <DisplayTodo
+          key={todo.id}
+          _id={todo._id}
+          id={todo.id}
+          todo={todo.todo}
+        />
       ))}
       <button onClick={addTodoHandler}>Add Todo</button>
       {openAddTodo && <AddTodo />}
@@ -51,7 +56,8 @@ export async function getStaticProps() {
   return {
     props: {
       todoData: todoData.map((i) => ({
-        id: i._id.toString(),
+        _id: i._id.toString(),
+        id: i.id,
         todo: i.todo,
       })),
     },
